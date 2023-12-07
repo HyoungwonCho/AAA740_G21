@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=5 python ./annotator/grounded-sam/run_hdtf.py

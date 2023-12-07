@@ -1,0 +1,18 @@
+CUDA_VISIBLE_DEVICES=0,1,2 mpirun -np 3 python finetune_sdm_CityScape_gan.py \
+--cf config__/ref_attn_clip_combine_controlnet_attr_pretraining/Init_config_cont_gan.py \
+--do_train --root_dir /media/data/run_test/ \
+--log_dir Init/just_trial \
+--eval_before_train False \
+--img_size 512 \
+--local_train_batch_size 3 \
+--local_eval_batch_size 3 \
+--epochs 50 --deepspeed \
+--eval_step 500 --save_step 500 \
+--gradient_accumulate_steps 1 \
+--learning_rate 2e-4 --fix_dist_seed --loss_target "noise" \
+--unet_unfreeze_type "transblocks" \
+--refer_sdvae \
+--ref_null_caption False \
+--combine_clip_local --combine_use_mask \
+--conds "masks" \
+--max_eval_samples 1000 --node_split_sampler 0

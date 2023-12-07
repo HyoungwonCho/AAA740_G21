@@ -1,0 +1,17 @@
+CUDA_VISIBLE_DEVICES=1 mpirun -np 1 python finetune_sdm_CityScape.py \
+--cf config/ref_attn_clip_combine_controlnet_attr_pretraining/CityScape_config.py \
+--local_train_batch_size 12 \
+--local_eval_batch_size 12 \
+--do_train --root_dir /media/data1/run_test/ --log_dir CityScape/discriminator_01 \
+--eval_before_train False \
+--epochs 40 --deepspeed \
+--eval_step 200 --save_step 200 \
+--gradient_accumulate_steps 1 \
+--learning_rate 1e-3 --fix_dist_seed --loss_target "noise" \
+--unet_unfreeze_type "all" \
+--refer_sdvae \
+--ref_null_caption False \
+--combine_clip_local --combine_use_mask \
+--conds "seg_w_edge" \
+--max_eval_samples 2000 \
+--node_split_sampler 0

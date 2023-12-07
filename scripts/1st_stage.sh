@@ -1,0 +1,16 @@
+CUDA_VISIBLE_DEVICES=0,1,4 mpirun -np 3 python finetune_sdm_MultiData.py --cf config/ref_attn_clip_combine_controlnet_attr_pretraining/MultiData_config.py \
+--do_train --root_dir run_test/ \
+--stage1_pretrain_path /media/data/disco_1stStage_pretrained.pt \
+--local_train_batch_size 64 \
+--local_eval_batch_size 64 \
+--log_dir first_stage/wo_pretrained \
+--epochs 40 --deepspeed \
+--eval_step 2000 --save_step 2000 \
+--gradient_accumulate_steps 1 \
+--learning_rate 1e-3 --fix_dist_seed --loss_target "noise" \
+--unet_unfreeze_type "transblocks" \
+--refer_sdvae \
+--ref_null_caption False \
+--combine_clip_local --combine_use_mask \
+--conds "masks" \
+--max_eval_samples 2000 --strong_aug_stage1 --node_split_sampler 0
